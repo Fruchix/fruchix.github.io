@@ -1,10 +1,11 @@
 name: "Mélian Fruchart"
 nickname: "Mélian Fruchart"
 greeting: "Hi, I am"
-image: "images/yoda.png"
+image: "images/pfp.png"
+title: "HPC Engineer & Software Developer"
 contactInfo:
   # email: "ton-email@mail.com"
   github: "Fruchix"
   linkedin: "melian-fruchart"
 about:
-  description: "After a 3-year work-study program at ENSIMAG and HPE as an HPC engineer apprentice, I am now looking for new opportunities to continue my journey through HPC. Based in Paris, I am open to on-site, hybrid or full remote jobs, starting as soon as possible."
+  description: "I am a computer science engineer, graduate of the french [ENSIMAG engineering school](#education), with a 3-year work-study experience as an [HPC engineer apprentice at HPE](#experiences). I am now looking for new opportunities in Software Engineering and High-Performance Computing.  \n\nBased in Paris, I am open to on-site, hybrid or full remote jobs, starting as soon as possible."
