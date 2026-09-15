@@ -1,6 +1,7 @@
 name: "Mélian Fruchart"
 nickname: "Mélian Fruchart"
 greeting: "Hi, I am"
+image: "images/yoda.png"
 contactInfo:
   # email: "ton-email@mail.com"
   github: "Fruchix"

@@ -64,12 +64,17 @@
 
 <div class="container-fluid" id="home" style="position: relative; height: 100vh; min-height: 600px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
   <style>
-    /* CSS des backgrounds de Toha */
     #homePageBackgroundImageDivStyled { background-image: url('{{ $tiny.RelPermalink }}'); }
     @media (min-width: 500px) and (max-width: 800px) { #homePageBackgroundImageDivStyled { background-image: url('{{ $small.RelPermalink }}'); } }
     @media (min-width: 801px) and (max-width: 1200px) { #homePageBackgroundImageDivStyled { background-image: url('{{ $medium.RelPermalink }}'); } }
     @media (min-width: 1201px) and (max-width: 1500px) { #homePageBackgroundImageDivStyled { background-image: url('{{ $large.RelPermalink }}'); } }
     @media (min-width: 1501px) { #homePageBackgroundImageDivStyled { background-image: url('{{ $src.RelPermalink }}'); } }
+
+    .summary-card {
+      background-color: #F8FAFC;
+      padding: 30px;
+      border-radius: 12px;
+    }
 
     html[data-theme='dark'] {
       #homePageBackgroundImageDivStyled { background-image: url('{{ $darkTiny.RelPermalink }}'); }
@@ -77,6 +82,10 @@
       @media (min-width: 801px) and (max-width: 1200px) { #homePageBackgroundImageDivStyled { background-image: url('{{ $darkMedium.RelPermalink }}'); } }
       @media (min-width: 1201px) and (max-width: 1500px) { #homePageBackgroundImageDivStyled { background-image: url('{{ $darkLarge.RelPermalink }}'); } }
       @media (min-width: 1501px) { #homePageBackgroundImageDivStyled { background-image: url('{{ $darkSrc.RelPermalink }}'); } }
+
+      .summary-card {
+        background-color: #1e2532;
+      }
     }
   </style>
   
@@ -84,24 +93,27 @@
   <div id="homePageBackgroundImageDivStyled" class="background container-fluid" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: -1; opacity: 0.15;"></div>
   
   <div class="container content anchor" id="about">
-    <div class="row pt-sm-2 pt-md-4 align-items-center">
+    <div class="row pt-sm-2 pt-md-4 align-items-center justify-content-center">
       
-      <div class="col-sm-4 text-center mb-4 mb-sm-0">
+      <div class="col-12 col-md-auto text-center mb-4 mb-md-0">
         {{ if $authorImageRes }}
-        <img src="{{ $authorImageRes.RelPermalink }}" class="rounded-circle img-fluid shadow" alt="{{ $name }}" style="border: 4px solid var(--primary-color); max-width: 220px;" />
+        <img src="{{ $authorImageRes.RelPermalink }}" class="rounded-circle img-fluid shadow" alt="{{ $name }}" style="border: 4px solid var(--primary-color); max-width: 220px; justify-self: center;" />
         {{ end }}
       </div>
 
-      <div class="col-sm-8 text-left">
+      <!-- Adjustable separator -->
+      <div class="d-none d-md-block" style="width: 60px;"></div>
+
+      <div class="col-12 col-md-7 col-lg-6 text-left summary-card shadow">
         <h1 class="p-1 font-weight-bold" style="font-size: 2.5rem;">{{ $author.greeting }} {{ $name }}</h1>
         <h5 class="p-1 text-muted">HPC Engineer & Developer</h5>
         
-        <p class="p-1 text-justify mt-3" style="font-size: 1.1rem; line-height: 1.6;">
+        <p class="p-1 mt-3 text-justify" style="font-size: 1.1rem; line-height: 1.6;">
           {{ $author.about.description | markdownify }}
         </p>
 
         <div class="text-container mt-4">
-          <ul class="social-link d-flex list-unstyled" style="gap: 1.5rem;">
+          <ul class="social-link d-flex list-unstyled mb-0" style="gap: 1.5rem;">
             {{ if $author.contactInfo.email }}
               <li><a href="mailto:{{ $author.contactInfo.email }}" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope fa-2x"></i></a></li>
             {{ end }}

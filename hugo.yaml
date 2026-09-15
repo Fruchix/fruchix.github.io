@@ -38,7 +38,9 @@ params:
   # Show tags under the post title
   enableTags: true
 
-
+  logo:
+    main: images/yoda.png
+    favicon: images/favicon.png
 
 # Activation des modules pour le thème
 module:
