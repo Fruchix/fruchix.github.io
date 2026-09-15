@@ -1,0 +1,34 @@
+section:
+  name: Experiences
+  id: experiences
+  enable: true
+  weight: 2
+  showOnNavbar: true
+
+experiences:
+  - company:
+      name: "Hewlett Packard Enterprise"
+      location: "Grenoble, FR"
+      url: "https://www.hpe.com/"
+      logo: "/images/companies/hpe.png"
+
+    positions:
+      - designation: "HPC engineer - work-study"
+        start: "Sep 2023"
+        end: "Aug 2026"
+        responsibilities:
+          - "**AI Factory (end of studies project)**: deployment and validation of an IaaC AI Factory in Grenoble's AI Lab. Development and demonstration of MLOps environments and workflows on Kubeflow."
+          - "**Expert HPC support**: software stack troubleshooting and optimization across HPE clusters. Custom builds and performance tuning of various versions of OpenMPI, LibFabric and Slingshot drivers."
+          - "**Engineering of a benchmark dataset**: compare interconnects (Slingshot, InfiniBand HDR/NDR) and MPI implementations (OpenMPI, MPICH, CrayMPICH) using OSU micro-benchmarks. Creation of interactive dashboards to present and share the results."
+          - "**Software development**: non-regression test suite in Python for an internal benchmarking tool."
+
+  - company:
+      name: "Karrus"
+      location: "Grenoble, FR"
+      logo: "/images/companies/karrus.png"
+    positions:
+      - designation: "Software developer - internship"
+        start: "April 2023"
+        end: "June 2023"
+        responsibilities:
+          - "**IT fleet monitoring solution**: remote monitoring and diagnostics of sensors and servers, with data aggregation for customer HMIs using Centreon."

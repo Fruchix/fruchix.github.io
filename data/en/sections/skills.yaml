@@ -1,0 +1,36 @@
+section:
+  name: Skills
+  id: skills
+  enable: true
+  weight: 4
+  showOnNavbar: true
+
+skills:
+  - name: HPC Environments & Workload Managers
+    # logo: /images/sections/skills/slurm.png
+    summary: "Advanced troubleshooting and optimization of HPC clusters. Experienced with Slurm, PBS, Slingshot, InfiniBand, and LibFabric."
+    
+  - name: Parallel Programming & GPU
+    # logo: /images/sections/skills/cuda.png
+    summary: "Development and performance tuning of distributed applications using MPI, OpenMP, CUDA, NVSHMEM, and NCCL."
+
+  - name: DevOps & Cloud Native
+    # logo: /images/sections/skills/kubernetes.png
+    summary: "Capable of deploying and managing applications using Kubernetes, Docker, and Rancher. CI/CD automation with GitLab CI, AWX, and GitHub Actions."
+    url: "https://kubernetes.io/"
+
+  - name: Low-level & System Programming
+    # logo: /images/sections/skills/c.png
+    summary: "Deep understanding of computer architecture and OS internals. Proficient in C, x86/arm64 Assembly, and VHDL."
+
+  - name: Software Development & Scripting
+    # logo: /images/sections/skills/python.png
+    summary: "Building robust tools, testing suites, and CLI utilities. Proficient in Python, Bash/Zsh, Java, and SQL."
+
+  - name: Full-Stack Web Development
+    # logo: /images/sections/skills/react.png
+    summary: "Creating real-time web applications and dashboards. Experienced with TypeScript, Node.js, React, WebSockets, and REST APIs."
+
+  - name: HPC Concepts & Benchmarking
+    # logo: /images/sections/skills/benchmark.png
+    summary: "Expertise in distributed systems, parallel programming theory, performance tuning, and evaluating interconnects (e.g., OSU micro-benchmarks)."

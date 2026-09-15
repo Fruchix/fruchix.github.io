@@ -1,0 +1,20 @@
+section:
+  name: Languages & Certifications
+  id: achievements
+  enable: true
+  weight: 6
+  showOnNavbar: true
+
+achievements:
+  - title: "English"
+    summary: "C1 Level (TOEIC - 965)"
+  - title: "French"
+    summary: "Native Language"
+  - title: "Italian & German"
+    summary: "Italian: A1 (Test at Sapienza) | German: B1 (2019)"
+  - title: "PSC1 First Aid Certificate"
+    summary: "Obtained in 2018"
+  - title: "Driving license"
+    summary: "Category B (2021)"
+  - title: "Personal Interests"
+    summary: "Bouldering, Rowing, and handcrafting custom jewellery (creation and selling on Instagram)."

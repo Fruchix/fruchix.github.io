@@ -1,0 +1,127 @@
+{{ $author:= site.Data.author }}
+{{ if (index site.Data site.Language.Lang).author }}
+  {{ $author = (index site.Data site.Language.Lang).author }}
+{{ end }}
+
+{{ $name:="Jane Doe" }}
+{{ if $author.nickname }}
+  {{ $name = $author.nickname }}
+{{ else if $author.name }}
+  {{ $name = $author.name }}
+{{ end }}
+
+{{ $backgroundImage:= "/images/default-background.jpg" }}
+{{ if site.Params.background }}
+  {{ $backgroundImage = site.Params.background }}
+{{ end }}
+
+{{ $darkBackgroundImage:= $backgroundImage }}
+{{ if site.Params.darkBackground }}
+  {{ $darkBackgroundImage = site.Params.darkBackground }}
+{{ end }}
+
+{{/* Gestion de l'avatar depuis hugo.yaml (site.Params.author.avatar) */}}
+{{ $authorImage:= "/images/default-avatar.png" }}
+{{ if site.Params.author.avatar }}
+  {{ $authorImage = site.Params.author.avatar }}
+{{ else if $author.image }}
+  {{ $authorImage = $author.image }}
+{{ end }}
+{{ $authorImageRes := resources.Get $authorImage }}
+
+{{/* apply image processing. don't use "Fit" in svg or gif */}}
+{{ if and $authorImageRes (and (ne $authorImageRes.MediaType.SubType "svg") ( ne $authorImageRes.MediaType.SubType "gif")) }}
+  {{ $authorImageRes = $authorImageRes.Fit "250x250" }}
+{{ end }}
+
+{{/* get file that matches the filename as specified as src="" in shortcode */}}
+{{ $src := resources.Get $backgroundImage }}
+{{ $tinyw := default "500x" }}
+{{ $smallw := default "800x" }}
+{{ $mediumw := default "1200x" }}
+{{ $largew := default "1500x" }}
+
+{{ $tiny := $src.Resize $tinyw }}
+{{ $small := $src.Resize $smallw }}
+{{ $medium := $src.Resize $mediumw }}
+{{ $large := $src.Resize $largew }}
+
+{{ if lt $src.Width "500" }}{{ $tiny := $src}}{{ $small := $src}}{{ $medium := $src}}{{ $large := $src}}{{ end }}
+{{ if lt $src.Width "800" }}{{ $small := $src}}{{ $medium := $src}}{{ $large := $src}}{{ end }}
+{{ if lt $src.Width "1200" }}{{ $medium := $src}}{{ $large := $src}}{{ end }}
+{{ if lt $src.Width "1500" }}{{ $large := $src}}{{ end }}
+
+{{ $darkSrc := resources.Get $darkBackgroundImage }}
+{{ $darkTiny := $darkSrc.Resize $tinyw }}
+{{ $darkSmall := $darkSrc.Resize $smallw }}
+{{ $darkMedium := $darkSrc.Resize $mediumw }}
+{{ $darkLarge := $darkSrc.Resize $largew }}
+
+{{ if lt $darkSrc.Width "500" }}{{ $darkTiny := $src}}{{ $darkSmall := $src}}{{ $darkMedium := $src}}{{ $darkLarge := $src}}{{ end }}
+{{ if lt $src.Width "800" }}{{ $darkSmall := $src}}{{ $darkMedium := $src}}{{ $darkLarge := $src}}{{ end }}
+{{ if lt $src.Width "1200" }}{{ $darkMedium := $src}}{{ $darkLarge := $src}}{{ end }}
+{{ if lt $src.Width "1500" }}{{ $darkLarge := $src}}{{ end }}
+
+<div class="container-fluid" id="home" style="position: relative; height: 100vh; min-height: 600px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+  <style>
+    /* CSS des backgrounds de Toha */
+    #homePageBackgroundImageDivStyled { background-image: url('{{ $tiny.RelPermalink }}'); }
+    @media (min-width: 500px) and (max-width: 800px) { #homePageBackgroundImageDivStyled { background-image: url('{{ $small.RelPermalink }}'); } }
+    @media (min-width: 801px) and (max-width: 1200px) { #homePageBackgroundImageDivStyled { background-image: url('{{ $medium.RelPermalink }}'); } }
+    @media (min-width: 1201px) and (max-width: 1500px) { #homePageBackgroundImageDivStyled { background-image: url('{{ $large.RelPermalink }}'); } }
+    @media (min-width: 1501px) { #homePageBackgroundImageDivStyled { background-image: url('{{ $src.RelPermalink }}'); } }
+
+    html[data-theme='dark'] {
+      #homePageBackgroundImageDivStyled { background-image: url('{{ $darkTiny.RelPermalink }}'); }
+      @media (min-width: 500px) and (max-width: 800px) { #homePageBackgroundImageDivStyled { background-image: url('{{ $darkSmall.RelPermalink }}'); } }
+      @media (min-width: 801px) and (max-width: 1200px) { #homePageBackgroundImageDivStyled { background-image: url('{{ $darkMedium.RelPermalink }}'); } }
+      @media (min-width: 1201px) and (max-width: 1500px) { #homePageBackgroundImageDivStyled { background-image: url('{{ $darkLarge.RelPermalink }}'); } }
+      @media (min-width: 1501px) { #homePageBackgroundImageDivStyled { background-image: url('{{ $darkSrc.RelPermalink }}'); } }
+    }
+  </style>
+  
+  <span class="on-the-fly-behavior"></span>
+  <div id="homePageBackgroundImageDivStyled" class="background container-fluid" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: -1; opacity: 0.15;"></div>
+  
+  <div class="container content anchor" id="about">
+    <div class="row pt-sm-2 pt-md-4 align-items-center">
+      
+      <div class="col-sm-4 text-center mb-4 mb-sm-0">
+        {{ if $authorImageRes }}
+        <img src="{{ $authorImageRes.RelPermalink }}" class="rounded-circle img-fluid shadow" alt="{{ $name }}" style="border: 4px solid var(--primary-color); max-width: 220px;" />
+        {{ end }}
+      </div>
+
+      <div class="col-sm-8 text-left">
+        <h1 class="p-1 font-weight-bold" style="font-size: 2.5rem;">{{ $author.greeting }} {{ $name }}</h1>
+        <h5 class="p-1 text-muted">HPC Engineer & Developer</h5>
+        
+        <p class="p-1 text-justify mt-3" style="font-size: 1.1rem; line-height: 1.6;">
+          {{ $author.about.description | markdownify }}
+        </p>
+
+        <div class="text-container mt-4">
+          <ul class="social-link d-flex list-unstyled" style="gap: 1.5rem;">
+            {{ if $author.contactInfo.email }}
+              <li><a href="mailto:{{ $author.contactInfo.email }}" title="Email" target="_blank" rel="noopener"><i class="fas fa-envelope fa-2x"></i></a></li>
+            {{ end }}
+            {{ if $author.contactInfo.github }}
+              <li><a href="https://github.com/{{ $author.contactInfo.github }}" title="GitHub" target="_blank" rel="noopener"><i class="fab fa-github fa-2x"></i></a></li>
+            {{ end }}
+            {{ if $author.contactInfo.linkedin }}
+              <li><a href="https://www.linkedin.com/in/{{ $author.contactInfo.linkedin }}" title="LinkedIn" target="_blank" rel="noopener"><i class="fab fa-linkedin fa-2x"></i></a></li>
+            {{ end }}
+            {{ if $author.contactInfo.phone }}
+              <li><a href="tel:{{ $author.contactInfo.phone }}" title="Phone" target="_blank" rel="noopener"><i class="fas fa-phone fa-2x"></i></a></li>
+            {{ end }}
+          </ul>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <a href="#experiences" class="arrow-center" aria-label="Read more" style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); text-decoration: none;"> 
+    <i class="arrow bounce fa fa-chevron-down" style="font-size: 2rem; color: var(--primary-color);"></i>
+  </a>
+</div>

@@ -1,0 +1,60 @@
+section:
+  name: Projects
+  id: projects
+  enable: true
+  weight: 5
+  showOnNavbar: true
+
+buttons:
+  - name: "Academic"
+    filter: "Academic project"
+  - name: "Personal"
+    filter: "Personal project"
+  - name: "All"
+    filter: "all"
+
+projects:
+  - name: "WikiGraph"
+    role: "Developer & Maintainer"
+    summary: "Real time game where the goal is to reach Wikipedia pages with the shortest path or time. Full stack architecture generating navigation graphs."
+    tags: ["React", "TypeScript", "Express", "SocketIO", "SQLite", "Personal project"]
+    url: "/posts/projects/wikigraph/"
+
+  - name: "Star (CLI)"
+    role: "Developer & Maintainer"
+    summary: "CLI directories bookmark manager to dynamically add and navigate into your favorite directories."
+    tags: ["Bash", "CLI", "GitHub Actions", "Personal project"]
+    repo: "https://github.com/Fruchix/star"
+
+  - name: "ENSIMAG OS Kernel"
+    role: "Developer"
+    summary: "Development of a 32 bits x86 kernel in C and assembly. Includes process management, scheduling, message queues and system calls."
+    tags: ["C", "Assembly x86", "OS Architecture", "Academic project"]
+    repo: "https://github.com/Fruchix/ENSIMAG-OS-Kernel"
+
+  - name: "IUT2 Discord Bot"
+    role: "Developer"
+    summary: "An unofficial discord bot providing the academic calendar and the list of unoccupied classrooms parsing ICAL data."
+    tags: ["Python", "SQLite", "JSON", "Personal project"]
+    repo: "https://github.com/Fruchix/IUT2-Discord-Bot"
+
+  - name: "ENSIMAG Discord Bot"
+    role: "Developer"
+    summary: "An unofficial discord bot providing the academic calendar."
+    tags: ["Python", "Personal project"]
+    repo: "https://github.com/Fruchix/ENSIMAG-Discord-Bot"
+
+  - name: "Java-like Language Compiler"
+    role: "Developer"
+    summary: "Development of a compiler for a Java-like language in a team of 9 students."
+    tags: ["Java", "ANTLR", "Bash", "CI/CD", "Academic project"]
+
+  - name: "RISC-V processor"
+    role: "Developer"
+    summary: "Implementation of a RISC-V instruction set in VHDL and assembly."
+    tags: ["VHDL", "Assembly", "RISC-V", "Academic project"]
+
+  - name: "Auction Web Application"
+    role: "Project Manager & Developer"
+    summary: "Design and development of an auction web application using Agile iterations (team of 6)."
+    tags: ["PHP", "JavaScript", "PostgreSQL", "WebSockets", "Academic project"]

@@ -1,0 +1,45 @@
+section:
+  name: Education
+  id: education
+  enable: true
+  weight: 3
+  showOnNavbar: true
+
+degrees:
+  - name: Master’s degree in engineering - work-study
+    icon: fa-graduation-cap
+    timeframe: Sep 2023 - Aug 2026
+    institution:
+      name: Ensimag - French National Computer Science and Mathematics Engineering School
+      url: "https://ensimag.grenoble-inp.fr/"
+    customSections: 
+      - name: Most relevant courses
+        content: Operating System, Computer Architecture, Networks, Low-level and C languages, Linear algebra, Calculus
+
+  - name: Erasmus exchange semester
+    icon: fa-plane
+    timeframe: Sep 2025 - Feb 2026
+    institution:
+      name: Sapienza University of Rome
+      url: "https://www.uniroma1.it/"
+    customSections: 
+      - name: Most relevant courses
+        content: HPC, Dependable Distributed Systems, Large Scale Data Management
+
+  - name: Bachelor's degree in computer science
+    icon: fa-laptop-code
+    timeframe: Sep 2021 - July 2022
+    institution:
+      name: IUT2, Université Grenoble Alpes
+      url: "https://iut2.univ-grenoble-alpes.fr/"
+    extracurricularActivities: 
+      - Valedictorian
+      - Ambassador student
+      - Student representative
+
+  - name: High School Diploma (Maths, Engineering, Physics)
+    icon: fa-book
+    timeframe: Sep 2018 - July 2021
+    institution:
+      name: Lycée Champollion, Grenoble
+      url: "https://champollion.ent.auvergnerhonealpes.fr/"

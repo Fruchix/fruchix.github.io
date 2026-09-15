@@ -1,0 +1,46 @@
+baseURL: "https://Fruchix.github.io/"
+title: "Mélian Fruchart"
+# theme: ["github.com/hugo-themes/toha/v4"]
+
+defaultContentLanguage: en
+languages:
+  en:
+    label: English
+    weight: 1
+  # fr:
+  #   label: Français
+  #   weight: 2
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+enableEmoji: true
+
+params:
+  gitRepo: https://github.com/Fruchix/Fruchix
+  topNavbar:
+    maxVisibleSections: 10
+
+  features:
+    # portfolio:
+    #   enable: true
+    blog:
+      enable: true
+    toc:
+      enable: true
+
+  # specify whether you want to show Table of Contents in reading page
+  enableTOC: true
+
+  # Show tags under the post title
+  enableTags: true
+
+
+
+# Activation des modules pour le thème
+module:
+  imports:
+    - path: github.com/hugo-toha/toha/v4
