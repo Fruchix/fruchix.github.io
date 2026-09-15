@@ -1,0 +1,182 @@
+{{ $sectionID := replace (lower .section.name) " " "-" }}
+{{ if .section.id }}
+{{ $sectionID = .section.id }}
+{{ end }}
+
+<div class="container-fluid anchor pb-5 projects-section" id="{{ $sectionID }}">
+  {{ if not (.section.hideTitle) }}
+  <h1 class="text-center">
+    <span id="{{ $sectionID }}"></span>{{ .section.name }}
+  </h1>
+  {{ else }}
+  <h1 class="text-center" style="display: none">
+    <span id="{{ $sectionID }}"></span>{{ .section.name }}
+  </h1>
+  {{ end }}
+  <div class="container ms-auto text-center">
+    <div class="row filter-container mb-4">
+      {{ range $index, $group := .filterGroups }}
+      <div class="col-12 project-filter-group mb-3" data-group="proj-group-{{ $index }}">
+        <h6 class="d-inline-block mr-3 mb-0">{{ $group.name }}:</h6>
+        <div class="btn-group filter-buttons">
+          <button class="btn btn-sm btn-outline-info active project-filter-btn" data-filter="all">All</button>
+          {{ range $group.buttons }}
+          {{/* split filter string */}}
+          {{ $filters := split .filter "," }}
+          {{ $filterStr := "" }}
+
+          {{/* format each filter to include a dot and be urlized */}}
+          {{ range $index, $f := $filters }}
+          {{ if $index }}{{ $filterStr = printf "%s, " $filterStr }}{{ end }}
+          {{ $filterStr = printf "%s.%s" $filterStr (urlize (trim $f " ")) }}
+          {{ end }}
+
+          <button class="btn btn-sm btn-outline-info project-filter-btn" data-filter="{{ $filterStr }}">{{ .name
+            }}</button>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+    </div>
+
+  </div>
+  <div class="container filtr-projects" data-section="{{ $sectionID }}">
+    <div class="row" id="project-card-holder-{{ $sectionID }}">
+      {{ range .projects }}
+      {{ partial "cards/project" . }}
+      {{ end }}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const projectItems = document.querySelectorAll('.project-item');
+
+    let $projGrid = null;
+    if (typeof $ !== 'undefined' && $.fn.isotope) {
+      $projGrid = $('.projects-container');
+    }
+
+    const projFilterGroups = document.querySelectorAll('.project-filter-group');
+    let activeProjFilters = {};
+
+    projFilterGroups.forEach((group) => {
+      const groupId = group.getAttribute('data-group');
+      activeProjFilters[groupId] = [];
+
+      const buttons = group.querySelectorAll('.project-filter-btn');
+
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          const filterValue = button.getAttribute('data-filter');
+
+          if (filterValue === 'all') {
+            activeProjFilters[groupId] = [];
+            buttons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+          } else {
+            button.classList.toggle('active');
+            group.querySelector('[data-filter="all"]').classList.remove('active');
+
+            if (button.classList.contains('active')) {
+              if (!activeProjFilters[groupId].includes(filterValue)) {
+                activeProjFilters[groupId].push(filterValue);
+              }
+            } else {
+              activeProjFilters[groupId] = activeProjFilters[groupId].filter(f => f !== filterValue);
+            }
+
+            if (activeProjFilters[groupId].length === 0) {
+              group.querySelector('[data-filter="all"]').classList.add('active');
+            }
+          }
+
+          applyProjectFilters();
+        });
+      });
+    });
+
+    function applyProjectFilters() {
+      // unpack comma-separated filters
+      const groups = Object.values(activeProjFilters)
+        .filter(arr => arr.length > 0)
+        .map(arr => {
+          let flattened = [];
+          arr.forEach(val => {
+            val.split(',').forEach(subVal => {
+              flattened.push(subVal.trim());
+            });
+          });
+          return flattened;
+        });
+
+      let finalSelector = '*';
+
+      if (groups.length > 0) {
+        let selectors = groups[0];
+        for (let i = 1; i < groups.length; i++) {
+          const currentGroup = groups[i];
+          const newSelectors = [];
+          for (const sel of selectors) {
+            for (const filter of currentGroup) {
+              newSelectors.push(sel + filter);
+            }
+          }
+          selectors = newSelectors;
+        }
+        finalSelector = selectors.join(', ');
+      }
+
+      if ($projGrid && $projGrid.data('isotope')) {
+        $projGrid.isotope({ filter: finalSelector });
+      } else {
+        projectItems.forEach(item => {
+          if (finalSelector === '*' || item.matches(finalSelector)) {
+            item.style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      }
+    }
+
+    const cardTags = document.querySelectorAll('.card-tag-filter');
+
+    cardTags.forEach(tag => {
+      tag.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const targetFilter = tag.getAttribute('data-filter-target');
+        const filterBtns = document.querySelectorAll('.project-filter-btn');
+        let matchedBtn = null;
+
+        filterBtns.forEach(btn => {
+          const btnFilter = btn.getAttribute('data-filter');
+          if (btnFilter && btnFilter !== 'all') {
+            // Split the button's filter in case it contains multiple comma-separated classes
+            const subFilters = btnFilter.split(',').map(s => s.trim());
+
+            // If the card's tag matches ANY of the classes on this button, consider it a match
+            if (subFilters.includes(targetFilter)) {
+              matchedBtn = btn;
+            }
+          }
+        });
+
+        if (matchedBtn) {
+          if (!matchedBtn.classList.contains('active')) {
+            matchedBtn.click();
+          }
+
+          const filterContainer = document.querySelector('.project-filter-group').closest('.filter-container');
+          if (filterContainer) {
+            const y = filterContainer.getBoundingClientRect().top + window.scrollY - 100;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+        }
+      });
+    });
+  });
+</script>

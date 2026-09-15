@@ -5,37 +5,55 @@ section:
   weight: 5
   showOnNavbar: true
 
-buttons:
-  - name: "Academic"
-    filter: "Academic project"
-  - name: "Personal"
-    filter: "Personal project"
-  - name: "All"
-    filter: "all"
+filterGroups:
+  - name: "Type"
+    buttons:
+      - name: "Academic"
+        filter: "Academic project"
+      - name: "Personal"
+        filter: "Personal project"
+  - name: "Stack"
+    buttons:
+      - name: "Bash"
+        filter: "Bash"
+      - name: "Python"
+        filter: "Python"
+      - name: "Java"
+        filter: "Java"
+      - name: "CI/CD"
+        filter: "ci-cd"
+      - name: "C"
+        filter: "C"
+      - name: "Assembly"
+        filter: "Assembly"
+      - name: "Database"
+        filter: "PostGreSQL, SQLite"
+      - name: "Web"
+        filter: "React, Express, SocketIO, WebSockets, PHP, JavaScript, JS"
 
 projects:
   - name: "WikiGraph"
     role: "Developer & Maintainer"
     summary: "Real time game where the goal is to reach Wikipedia pages with the shortest path or time. Full stack architecture generating navigation graphs."
-    tags: ["React", "TypeScript", "Express", "SocketIO", "SQLite", "Personal project"]
+    tags: ["React", "TypeScript", "Express", "SocketIO", "SQLite", "CI-CD", "Personal project"]
     url: "/posts/projects/wikigraph/"
 
   - name: "Star (CLI)"
     role: "Developer & Maintainer"
     summary: "CLI directories bookmark manager to dynamically add and navigate into your favorite directories."
-    tags: ["Bash", "CLI", "GitHub Actions", "Personal project"]
+    tags: ["Bash", "CLI", "CI-CD", "Personal project"]
     repo: "https://github.com/Fruchix/star"
 
   - name: "ENSIMAG OS Kernel"
     role: "Developer"
     summary: "Development of a 32 bits x86 kernel in C and assembly. Includes process management, scheduling, message queues and system calls."
-    tags: ["C", "Assembly x86", "OS Architecture", "Academic project"]
+    tags: ["C", "Assembly", "Academic project"]
     repo: "https://github.com/Fruchix/ENSIMAG-OS-Kernel"
 
   - name: "IUT2 Discord Bot"
     role: "Developer"
     summary: "An unofficial discord bot providing the academic calendar and the list of unoccupied classrooms parsing ICAL data."
-    tags: ["Python", "SQLite", "JSON", "Personal project"]
+    tags: ["Python", "SQLite", "Personal project"]
     repo: "https://github.com/Fruchix/IUT2-Discord-Bot"
 
   - name: "ENSIMAG Discord Bot"
@@ -47,7 +65,7 @@ projects:
   - name: "Java-like Language Compiler"
     role: "Developer"
     summary: "Development of a compiler for a Java-like language in a team of 9 students."
-    tags: ["Java", "ANTLR", "Bash", "CI/CD", "Academic project"]
+    tags: ["Java", "ANTLR", "Bash", "CI-CD", "Academic project"]
 
   - name: "RISC-V processor"
     role: "Developer"
