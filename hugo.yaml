@@ -1,4 +1,4 @@
-baseURL: "https://Fruchix.github.io/"
+baseURL: "https://fruchix.github.io/"
 title: "Mélian Fruchart"
 # theme: ["github.com/hugo-themes/toha/v4"]
 
@@ -20,7 +20,7 @@ outputs:
 enableEmoji: true
 
 params:
-  gitRepo: https://github.com/Fruchix/Fruchix
+  gitRepo: https://github.com/Fruchix/fruchix.github.io
   topNavbar:
     maxVisibleSections: 10
 
