@@ -49,6 +49,37 @@
   </div>
 </div>
 
+<style>
+  @media (max-width: 800px) {
+    .projects-section .filter-container .project-filter-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .projects-section .filter-container h6 {
+      margin-bottom: 0.75rem !important;
+      margin-right: 0 !important;
+    }
+
+    /* button group wraps onto new lines */
+    .projects-section .filter-buttons.btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* Override Bootstrap's group styling to make them look like individual tags */
+    .projects-section .filter-buttons.btn-group>.btn {
+      border-radius: 4px !important;
+      margin: 0 !important;
+      /* Removes Bootstrap's default negative overlapping margins */
+      flex: 0 0 auto;
+      /* Prevents buttons from stretching to fill the row */
+    }
+  }
+</style>
+
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const projectItems = document.querySelectorAll('.project-item');
