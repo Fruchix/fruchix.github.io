@@ -1,0 +1,64 @@
+name: Deploy Hugo to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# prevent multiple deployments at the same time
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1/7 - Code checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 2/7 - Node.js installation
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 3/7 - Go installation
+        uses: actions/setup-go@v5
+        with:
+          go-version: '>=1.20'
+
+      - name: 4/7 - NPM dependencies installation
+        run: npm ci
+
+      - name: 5/7 - Hugo Extended installation
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: 6/7 - Site compilation
+        run: hugo --minify
+
+      - name: 7/7 - Save artifacts for deployment
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: 1/1 - Github Pages deployment
+        id: deployment
+        uses: actions/deploy-pages@v4
