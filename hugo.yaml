@@ -39,7 +39,7 @@ params:
   enableTags: true
 
   logo:
-    main: images/yoda.png
+    main: images/pfp.png
     favicon: images/favicon.png
 
 # Activation des modules pour le thème
