@@ -34,7 +34,7 @@ filterGroups:
 projects:
   - name: "WikiGraph"
     role: "Developer & Maintainer"
-    summary: "Real time game where the goal is to reach Wikipedia pages with the shortest path or time. Full stack architecture generating navigation graphs."
+    summary: "Web-based real-time multiplayer game, where players navigate through Wikipedia pages by clicking on internal links in order to reach one or more target pages."
     tags: ["React", "TypeScript", "Express", "SocketIO", "SQLite", "CI-CD", "Personal project"]
     url: "/posts/projects/wikigraph/"
 

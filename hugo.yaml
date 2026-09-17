@@ -42,6 +42,11 @@ params:
     main: images/pfp.png
     favicon: images/favicon.png
 
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
 # Activation des modules pour le thème
 module:
   imports:
