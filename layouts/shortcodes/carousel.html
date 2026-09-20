@@ -1,0 +1,263 @@
+{{ $sliderId := printf "carousel-%s" (.Get "dir" | urlize) }}
+{{ $images := .Page.Resources.Match (printf "%s/*" (.Get "dir")) }}
+
+{{ if $images }}
+
+<script>
+  // Ensure the listener is only added once, even if you use multiple carousels on the same page
+  if (!window.hasCarouselKeyboardListener) {
+    window.hasCarouselKeyboardListener = true;
+
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        
+        // Find if any modal is currently visible on the screen
+        const activeModal = document.querySelector('.modal.show');
+        
+        if (activeModal) {
+          // Select the corresponding arrow button inside that specific modal
+          const arrowSelector = event.key === 'ArrowLeft' ? '.carousel-control-prev' : '.carousel-control-next';
+          const arrowButton = activeModal.querySelector(arrowSelector);
+          
+          // Trigger a click exactly as if you used your mouse
+          if (arrowButton) {
+            arrowButton.click();
+          }
+        }
+      }
+    });
+  }
+</script>
+
+<style>
+  /* Base styles for thumbnails in both inline and modal carousels */
+  .carousel-indicators img {
+    width: 60px;
+    height: 40px;
+    object-fit: cover;
+    cursor: pointer;
+    margin: 0 4px;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    flex-shrink: 0 !important;
+    min-width: 60px !important; /* Locks width to prevent condensation */
+    border: 4px solid transparent !important; 
+
+  }
+
+  .carousel-indicators img.active {
+    border-color: #fff !important; opacity: 1;
+  }
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    filter: drop-shadow(0px 0px 2px rgb(0, 0, 0));
+  }
+  .carousel-item img.inline-img {
+    cursor: zoom-in;
+  }
+  /* Darken the background slightly behind the enlarged images */
+  .modal-carousel-bg {
+    background-color: rgba(0,0,0,0.4);
+  }
+
+    /* Move arrows closer to the edges by shrinking their container width */
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 5% !important; /* Bootstrap default is 15% */
+    }
+
+    /* Eliminate slide animation delay so clicks process instantly */
+    .carousel-item {
+        transition: transform 0.15s ease-in-out !important;
+    }
+
+    /* Force indicators into a single scrollable row, align left for scrolling */
+/* Force indicators into a single scrollable row, align left */
+    .carousel-indicators {
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        gap: 8px; 
+        justify-content: flex-start !important; 
+        padding: 0 !important; /* Remove the old padding math */
+        -ms-overflow-style: none;  
+        scrollbar-width: none;  
+    }
+    .carousel-indicators::-webkit-scrollbar {
+        display: none; 
+    }
+
+    /* Invisible flex items calculate the exact center perfectly */
+    .carousel-indicators::before,
+    .carousel-indicators::after {
+        content: "";
+        flex: 0 0 calc(50% - 30px); /* 50% of screen minus half the 60px thumbnail */
+    }
+
+    /* Force INLINE carousel previews to overlap the bottom of the image */
+    #{{ $sliderId }} > .carousel-indicators {
+        position: absolute !important;
+        bottom: 1rem;
+        margin: 0 !important;
+        left: 0;
+        right: 0;
+        z-index: 15;
+    }
+
+    /* Force MODAL carousel previews to stay below the image */
+    #modal-{{ $sliderId }} .carousel-indicators {
+        position: relative !important;
+        margin-top: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+</style>
+
+<!-- 1. The Inline Page Carousel -->
+<div id="{{ $sliderId }}" class="carousel slide mb-5">
+    <style>
+    /* Highlight the active thumbnail */
+    #{{ $sliderId }} .carousel-indicators img.active {
+        border-color: #fff !important;
+        opacity: 1;
+    }
+    #{{ $sliderId }} .carousel-indicators img {
+        opacity: 0.5;
+        transition: opacity 0.2s;
+    }
+    </style>
+  
+    <div class="carousel-inner rounded shadow-sm">
+        {{ range $index, $image := $images }}
+        <div class="carousel-item {{ if eq $index 0 }}active{{ end }}">
+        <!-- The onclick has been changed to click the modal's thumbnail instead of calling the Bootstrap JS -->
+        <img src="{{ $image.RelPermalink }}" class="d-block w-100 inline-img" alt="Gallery Image" 
+            data-bs-toggle="modal" data-bs-target="#modal-{{ $sliderId }}"
+            onclick="document.getElementById('modal-thumb-{{ $sliderId }}-{{ $index }}').click()">
+        </div>
+        {{ end }}
+    </div>
+
+      <!-- Inline Thumbnails -->
+    <div class="carousel-indicators" style="margin-bottom: 1rem;">
+        {{ range $index, $image := $images }}
+        <img id="modal-thumb-{{ $sliderId }}-{{ $index }}"
+            src="{{ $image.RelPermalink }}" 
+            data-bs-target="#{{ $sliderId }}" 
+            data-bs-slide-to="{{ $index }}" 
+            {{ if eq $index 0 }}class="active" aria-current="true"{{ end }} 
+            aria-label="Slide {{ add $index 1 }}" 
+            style="width: 60px; height: 40px; object-fit: cover; cursor: pointer; margin: 0 4px; border: 2px solid transparent; border-radius: 4px; box-shadow: 0 0 3px rgba(0,0,0,0.5);">
+        {{ end }}
+    </div>
+
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#{{ $sliderId }}" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#{{ $sliderId }}" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<!-- 2. The Sized-Up Popup Modal -->
+<div class="modal fade" id="modal-{{ $sliderId }}" tabindex="-1" aria-hidden="true">
+  <!-- Changed to modal-xl and centered to prevent hijacking the whole screen -->
+<!-- Use 90vw so it scales dynamically but leaves a screen border -->
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 90vw;">
+    <div class="modal-content bg-transparent border-0">
+      <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-2" data-bs-dismiss="modal" aria-label="Close" style="z-index: 1055; filter: drop-shadow(0px 0px 4px rgba(0,0,0,0.9));"></button>
+      
+      <div class="modal-body p-0">
+        <!-- Inner Modal Carousel with Keyboard Navigation Enabled -->
+        <div id="modal-carousel-{{ $sliderId }}" class="carousel slide" data-bs-keyboard="true">
+          
+            <style>
+            /* Highlight the active thumbnail in the modal */
+            #modal-carousel-{{ $sliderId }} .carousel-indicators img.active {
+                border-color: #fff !important;
+                opacity: 1;
+            }
+            #modal-carousel-{{ $sliderId }} .carousel-indicators img {
+                opacity: 0.5;
+                transition: opacity 0.2s;
+            }
+            </style>
+
+            <div class="carousel-inner rounded shadow-lg modal-carousel-bg">
+            {{ range $index, $image := $images }}
+            <div class="carousel-item {{ if eq $index 0 }}active{{ end }}">
+                <!-- Reduced to 70vh to ensure previews fit on screen -->
+                <img src="{{ $image.RelPermalink }}" class="d-block w-100" alt="Enlarged Gallery Image" style="max-height: 70vh; object-fit: contain;">
+            </div>
+            {{ end }}
+            </div>
+          
+          <!-- Modal Thumbnails -->
+            <div class="carousel-indicators">
+            {{ range $index, $image := $images }}
+            <img src="{{ $image.RelPermalink }}" 
+                data-bs-target="#modal-carousel-{{ $sliderId }}" 
+                data-bs-slide-to="{{ $index }}" 
+                {{ if eq $index 0 }}class="active" aria-current="true"{{ end }} 
+                aria-label="Slide {{ add $index 1 }}"
+                style="width: 60px; height: 40px; object-fit: cover; cursor: pointer; margin: 0 4px; border: 2px solid transparent; border-radius: 4px; box-shadow: 0 0 3px rgba(0,0,0,0.5);">
+            {{ end }}
+            </div>
+
+
+          <!-- Modal Arrows -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#modal-carousel-{{ $sliderId }}" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#modal-carousel-{{ $sliderId }}" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ else }}
+  <p><em>No images found in the "{{ .Get "dir" }}" directory.</em></p>
+{{ end }}
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    
+    // Function to calculate and scroll to the center
+    function centerThumb(container, thumb, behavior) {
+      if (!container || !thumb) return;
+      const scrollLeft = thumb.offsetLeft + (thumb.offsetWidth / 2) - (container.clientWidth / 2);
+      container.scrollTo({ left: scrollLeft, behavior: behavior });
+    }
+
+    // 1. Smooth scroll when navigating an already-visible carousel
+    document.querySelectorAll('.carousel').forEach(function(carousel) {
+      carousel.addEventListener('slide.bs.carousel', function(event) {
+        const container = carousel.querySelector('.carousel-indicators');
+        // Only run if the container is currently visible on screen
+        if (container && container.clientWidth > 0) {
+          centerThumb(container, container.children[event.to], 'smooth');
+        }
+      });
+    });
+
+    // 2. Instant snap exactly when the modal finishes its fade-in animation
+    document.querySelectorAll('.modal').forEach(function(modal) {
+      modal.addEventListener('shown.bs.modal', function () {
+        const container = modal.querySelector('.carousel-indicators');
+        const activeThumb = container ? container.querySelector('.active') : null;
+        if (container && activeThumb) {
+          centerThumb(container, activeThumb, 'instant');
+        }
+      });
+    });
+    
+  });
+</script>
