@@ -16,6 +16,18 @@ Web-based real-time multiplayer game, where players navigate through Wikipedia p
 
 WikiGraph is currently hosted at <a href="https://wikigraph.fr" target="_blank">wikigraph.fr</a>
 
+## Image gallery
+
+WikiGraph menus.
+{{< carousel dir="gallery_menus" >}}
+
+A single player game creation, and its start.
+{{< carousel dir="gallery_singleplayer" >}}
+
+A multi player lobby creation, game start and playthrough.
+{{< carousel dir="gallery_multiplayer" >}}
+
+
 
 ## Background
 
@@ -33,6 +45,8 @@ Needing to balance work life, personal life and my personal computer science pas
 ## Architecture
 
 The code is currently not open source, though I will make it so *for sure*, as open source is very important to me.
+
+### Stack technologies
 
 - Frontend
   - Vite.js
@@ -59,6 +73,12 @@ The code is currently not open source, though I will make it so *for sure*, as o
 
 Both frontend and backend use JavaScript and TypeScript.
 
+### Data schema
+
+The database schema looks more or less like this. It has been updated a few times since this diagram was made (June 2025), but without **major** refactors.
+
+![Data base schema](wikigraph-database.png)
+
 ## Development status
 
 I want to evolve this prototype to a production state, to which I can easily add new features, without having to refactor each time. 
@@ -78,14 +98,6 @@ Here are the main changes to be made:
   - [ ] implement an event bus (improves the architecture separation, lets the server send events by itself)
 - [ ] implement new features
   - [ ] ...
-
-
-<!-- # Vue d'ensemble
-WikiGraph est un projet personnel de jeu en temps réel basé sur Wikipédia...
-
-## Architecture
-Ici, tu peux détailler ton backend (Express, SQLite) et ton frontend.
-Tu peux même intégrer des schémas de ton infrastructure, des extraits de code, ou une vidéo démo. -->
 
 <!-- ## Updates -->
 <!-- * **Septembre 2026 :** Optimisation des requêtes de graphes.
