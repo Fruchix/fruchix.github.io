@@ -74,5 +74,6 @@ projects:
 
   - name: "Auction Web Application"
     role: "Project Manager & Developer"
-    summary: "Design and development of an auction web application using Agile iterations (team of 6)."
+    summary: "Design and development of a real-time auction web application using agile methods (team of 6)."
     tags: ["PHP", "JavaScript", "PostgreSQL", "WebSockets", "Academic project"]
+    url: "/posts/projects/space_charity"
