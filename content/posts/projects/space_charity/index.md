@@ -44,7 +44,7 @@ Space charity public views.
 
 Public views on a phone:
 
-![Phone space charity public views](phone-views.png)
+![Phone space charity public views](phone-views.webp)
 
 Administrator-only views
 {{< carousel dir="gallery_admin" >}}

@@ -39,8 +39,8 @@ params:
   enableTags: true
 
   logo:
-    main: images/pfp.png
-    favicon: images/favicon.png
+    main: images/pfp.webp
+    favicon: images/favicon.webp
 
 markup:
   goldmark:

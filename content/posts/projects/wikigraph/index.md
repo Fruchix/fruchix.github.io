@@ -77,7 +77,7 @@ Both frontend and backend use JavaScript and TypeScript.
 
 The database schema looks more or less like this. It has been updated a few times since this diagram was made (June 2025), but without **major** refactors.
 
-![Data base schema](wikigraph-database.png)
+![Data base schema](wikigraph-database.webp)
 
 ## Development status
 
