@@ -47,6 +47,12 @@ markup:
     renderer:
       unsafe: true
 
+sitemap:
+  changeFreq: ''
+  disable: false
+  filename: sitemap.xml
+  priority: -1
+
 # Activation des modules pour le thème
 module:
   imports:
