@@ -14,7 +14,7 @@
   </h1>
   {{ end }}
   <div class="container ms-auto text-center">
-    <div class="row filter-container mb-4">
+    <div class="row filter-container mt-3">
       {{ range $index, $group := .filterGroups }}
       <div class="col-12 project-filter-group mb-3" data-group="proj-group-{{ $index }}">
         <h6 class="d-inline-block mr-3 mb-0">{{ $group.name }}:</h6>
@@ -50,6 +50,16 @@
 </div>
 
 <style>
+  /* Make filter buttons white by default for readability against the background */
+  .projects-section .filter-buttons .btn.project-filter-btn:not(.active):not(:hover) {
+    background-color: white;
+  }
+
+  .projects-section h6 {
+    color: #fff;
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
+  }
+
   @media (max-width: 800px) {
     .projects-section .filter-container .project-filter-group {
       display: flex;

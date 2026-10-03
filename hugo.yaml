@@ -24,6 +24,9 @@ params:
   topNavbar:
     maxVisibleSections: 10
 
+  # background: images/background.webp
+  background_parallax: images/background.webp
+
   features:
     # portfolio:
     #   enable: true

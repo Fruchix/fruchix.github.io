@@ -87,10 +87,16 @@
         background-color: #1e2532;
       }
     }
+
+    .summary-card-description p {
+      text-align: justify;
+    }
   </style>
   
   <span class="on-the-fly-behavior"></span>
-  <div id="homePageBackgroundImageDivStyled" class="background container-fluid" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: -1; opacity: 0.15;"></div>
+  {{ if site.Params.background }}
+    <div id="homePageBackgroundImageDivStyled" class="background container-fluid" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: -1; opacity: 0.15;"></div>
+  {{ end }}
   
   <div class="container content anchor" id="about">
     <div class="row pt-sm-2 pt-md-4 align-items-center justify-content-center">
@@ -108,9 +114,9 @@
         <h1 class="p-1 font-weight-bold" style="font-size: 2.5rem;">{{ $author.greeting }} {{ $name }}</h1>
         <h5 class="p-1 text-muted">{{ $author.title }}</h5>
         
-        <p class="p-1 mt-3 text-justify" style="font-size: 1.1rem; line-height: 1.6;">
+        <div class="p-1 mt-3 text-justify summary-card-description" style="font-size: 1.1rem; line-height: 1.5;">
           {{ $author.about.description | markdownify }}
-        </p>
+        </div>
 
         <div class="text-container mt-4">
           <ul class="social-link d-flex list-unstyled mb-0" style="gap: 1.5rem;">

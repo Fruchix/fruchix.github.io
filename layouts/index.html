@@ -1,0 +1,160 @@
+{{ $backgroundParallaxImage:= "" }}
+{{ if site.Params.background_parallax }}
+    {{ $backgroundParallaxImage = site.Params.background_parallax }}
+{{ end }}
+
+{{ $darkBackgroundParallaxImage:= $backgroundParallaxImage }}
+{{ if site.Params.darkBackgroundParallax }}
+  {{ $darkBackgroundParallaxImage = site.Params.darkBackgroundParallax }}
+{{ end }}
+
+{{/* get file that matches the filename as specified as src="" in shortcode */}}
+{{ $src := resources.Get $backgroundParallaxImage }}
+{{ $tinyw := default "500x" }}
+{{ $smallw := default "800x" }}
+{{ $mediumw := default "1200x" }}
+{{ $largew := default "1500x" }}
+
+{{ $tiny := $src.Resize $tinyw }}
+{{ $small := $src.Resize $smallw }}
+{{ $medium := $src.Resize $mediumw }}
+{{ $large := $src.Resize $largew }}
+
+{{ if lt $src.Width "500" }}{{ $tiny := $src}}{{ $small := $src}}{{ $medium := $src}}{{ $large := $src}}{{ end }}
+{{ if lt $src.Width "800" }}{{ $small := $src}}{{ $medium := $src}}{{ $large := $src}}{{ end }}
+{{ if lt $src.Width "1200" }}{{ $medium := $src}}{{ $large := $src}}{{ end }}
+{{ if lt $src.Width "1500" }}{{ $large := $src}}{{ end }}
+
+{{ $darkSrc := resources.Get $darkBackgroundParallaxImage }}
+{{ $darkTiny := $darkSrc.Resize $tinyw }}
+{{ $darkSmall := $darkSrc.Resize $smallw }}
+{{ $darkMedium := $darkSrc.Resize $mediumw }}
+{{ $darkLarge := $darkSrc.Resize $largew }}
+
+{{ if lt $darkSrc.Width "500" }}{{ $darkTiny := $src}}{{ $darkSmall := $src}}{{ $darkMedium := $src}}{{ $darkLarge := $src}}{{ end }}
+{{ if lt $src.Width "800" }}{{ $darkSmall := $src}}{{ $darkMedium := $src}}{{ $darkLarge := $src}}{{ end }}
+{{ if lt $src.Width "1200" }}{{ $darkMedium := $src}}{{ $darkLarge := $src}}{{ end }}
+{{ if lt $src.Width "1500" }}{{ $darkLarge := $src}}{{ end }}
+    
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Locale | default .Site.Language.Lang }}">
+  <head>
+    <title>{{- .Site.Title -}}</title>
+    {{ $siteDescription := .Site.Params.description }}
+    {{ if (index hugo.Data .Site.Language.Lang).site }}
+      {{ $siteConfig := (index hugo.Data .Site.Language.Lang).site }}
+      {{ if $siteConfig.description }}
+        {{ $siteDescription = $siteConfig.description }}
+      {{ end }}
+    {{ end }}
+    <meta name="description" content="{{ $siteDescription }}" />
+    
+    <!-- import common headers -->
+    {{- partial "header.html" . -}}
+    {{- partial "opengraph.html" . -}}
+    
+    <!--================= add analytics if enabled =========================-->
+    {{- partial "analytics.html" . -}}
+    {{ with resources.Get "scripts/core/theme-scheme.js" | fingerprint }}
+    <script integrity="{{.Data.Integrity}}">
+     {{ .Content | safeJS }}
+    </script>
+    {{ end }}
+  </head>
+  <body data-bs-spy="scroll" data-bs-target="#top-navbar" data-bs-offset="100">
+   
+
+  {{ if site.Params.background_parallax }}
+    <div id="parallaxBackgroundImageDiv" class="background container-fluid"></div>
+
+    <style>
+      #parallaxBackgroundImageDiv { 
+        background-image: url('{{ $tiny.RelPermalink }}');
+        /* Parallax properties */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -2;
+        opacity: 0.6;
+        /* background-color: rgba(0, 0, 0, 0) !important; */
+      }
+
+      .section-holder h1 {
+        color: #fff;
+        text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+      }
+
+      .section-holder h1 span {
+        height: 0px;
+      }
+
+      .bg-primary, .bg-secondary, #home {
+        background-color: rgba(0, 0, 0, 0.3) !important;
+      }
+
+      @media (min-width: 500px) and (max-width: 800px) { #parallaxBackgroundImageDiv { background-image: url('{{ $small.RelPermalink }}'); } }
+      @media (min-width: 801px) and (max-width: 1200px) { #parallaxBackgroundImageDiv { background-image: url('{{ $medium.RelPermalink }}'); } }
+      @media (min-width: 1201px) and (max-width: 1500px) { #parallaxBackgroundImageDiv { background-image: url('{{ $large.RelPermalink }}'); } }
+      @media (min-width: 1501px) { #parallaxBackgroundImageDiv { background-image: url('{{ $src.RelPermalink }}'); } }
+
+      html[data-theme='dark'] {
+        #parallaxBackgroundImageDiv { background-image: url('{{ $darkTiny.RelPermalink }}'); }
+        @media (min-width: 500px) and (max-width: 800px) { #parallaxBackgroundImageDiv { background-image: url('{{ $darkSmall.RelPermalink }}'); } }
+        @media (min-width: 801px) and (max-width: 1200px) { #parallaxBackgroundImageDiv { background-image: url('{{ $darkMedium.RelPermalink }}'); } }
+        @media (min-width: 1201px) and (max-width: 1500px) { #parallaxBackgroundImageDiv { background-image: url('{{ $darkLarge.RelPermalink }}'); } }
+        @media (min-width: 1501px) { #parallaxBackgroundImageDiv { background-image: url('{{ $darkSrc.RelPermalink }}'); } }
+      }
+    </style>
+  {{ end }}
+
+    <!--- NAVBAR ------------------------->
+    {{- partial "navigators/navbar.html" . -}}
+
+    <!--- ADD HOME SECTION ---------------->
+    {{- partial "sections/home.html" . -}}
+
+    <!--- ADD OPTIONAL SECTIONS ----------->
+    {{ $sections:= hugo.Data.sections }}
+    {{ if (index hugo.Data site.Language.Lang).sections }}
+      {{ $sections = (index hugo.Data site.Language.Lang).sections }}
+    {{ end }}
+
+    {{ if $sections }}
+      <!-- {{ $background:= "bg-primary"}} -->
+      {{ range sort $sections "section.weight" }}
+        {{ if .section.enable }}
+          <div class="container-fluid section-holder d-flex {{ $background }}">
+            {{ if .section.template }}
+              {{- partial .section.template . -}}
+            {{ else }}
+              {{- partial (printf "sections/%s.html" (replace (lower .section.id) " " "-")) . -}}
+            {{ end }}
+          </div>
+          <!--- alter background color for next section --->
+          <!-- {{ if eq $background "bg-primary" }}
+            {{ $background = "bg-secondary" }}
+          {{ else }}
+            {{ $background = "bg-primary" }}
+          {{end}} -->
+        {{ end }}
+      {{ end }}
+    {{ end }}
+
+    <!--- ADD FOOTER ----------------------->
+    {{ $footerTemplate:= site.Params.footer.template | default "footer.html" }}
+    {{- partial $footerTemplate . -}}
+
+    <!--- ADD COMMON SCRIPTS --------------->
+    {{ partial "scripts.html" . }}
+
+    <!------ ADD SUPPORT LINKS -------->
+    {{- partial "misc/support.html" . -}}
+
+  </body>
+</html>
