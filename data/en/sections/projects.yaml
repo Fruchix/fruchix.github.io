@@ -20,60 +20,78 @@ filterGroups:
         filter: "Python"
       - name: "Java"
         filter: "Java"
-      - name: "CI/CD"
-        filter: "ci-cd"
       - name: "C"
         filter: "C"
       - name: "Assembly"
         filter: "Assembly"
-      - name: "Database"
-        filter: "PostGreSQL, SQLite"
       - name: "Web"
         filter: "React, Express, SocketIO, WebSockets, PHP, JavaScript, JS"
+      - name: "CI/CD"
+        filter: "ci-cd"
+      - name: "Database"
+        filter: "PostGreSQL, SQLite"
 
 projects:
   - name: "WikiGraph"
     role: "Developer & Maintainer"
+    timeline: "2025 - Current"
     summary: "Web-based real-time multiplayer game, where players navigate through Wikipedia pages by clicking on internal links in order to reach one or more target pages."
-    tags: ["React", "TypeScript", "Express", "SocketIO", "SQLite", "CI-CD", "Personal project"]
+    tags: ["React", "TypeScript", "Express", "SocketIO", "SQLite", "CI-CD", "Asynchronous programming", "Personal project"]
     url: "/posts/projects/wikigraph/"
 
   - name: "Star (CLI)"
     role: "Developer & Maintainer"
+    timeline: "2024 - Current"
     summary: "CLI directories bookmark manager to dynamically add and navigate into your favorite directories."
     tags: ["Bash", "CLI", "CI-CD", "Personal project"]
     repo: "https://github.com/Fruchix/star"
 
   - name: "ENSIMAG OS Kernel"
-    role: "Developer"
+    timeline: "2025 (5 weeks)"
     summary: "Development of a 32 bits x86 kernel in C and assembly. Includes process management, scheduling, message queues and system calls."
     tags: ["C", "Assembly", "Academic project"]
     repo: "https://github.com/Fruchix/ENSIMAG-OS-Kernel"
 
+  - name: "Multi threaded video player"
+    timeline: "2025"
+    summary: "Development of a multi-threaded video player in C. Uses a producer-consumer pattern to decode and display video frames in real-time, from an ogg/theora/vorbis video file."
+    tags: ["C", "Multithreading", "Academic project"]
+
   - name: "IUT2 Discord Bot"
-    role: "Developer"
-    summary: "An unofficial discord bot providing the academic calendar and the list of unoccupied classrooms parsing ICAL data."
+    timeline: "2021 - 2023"
+    summary: "An unofficial discord bot providing the academic calendar and the list of unoccupied classrooms. Parses ICAL data of all departments and stores it in a database in order to enable complex queries."
     tags: ["Python", "SQLite", "Personal project"]
     repo: "https://github.com/Fruchix/IUT2-Discord-Bot"
 
   - name: "ENSIMAG Discord Bot"
-    role: "Developer"
+    timeline: "2023 - 2025"
     summary: "An unofficial discord bot providing the academic calendar."
     tags: ["Python", "Personal project"]
     repo: "https://github.com/Fruchix/ENSIMAG-Discord-Bot"
 
   - name: "Java-like Language Compiler"
-    role: "Developer"
+    role: "Scrum master & Developer"
+    timeline: "2023 (5 weeks)"
     summary: "Development of a compiler for a Java-like language in a team of 9 students."
     tags: ["Java", "ANTLR", "Bash", "CI-CD", "Academic project"]
 
-  - name: "RISC-V processor"
-    role: "Developer"
+  - name: "RISC-V instruction set implementation"
+    timeline: "2023"
     summary: "Implementation of a RISC-V instruction set in VHDL and assembly."
     tags: ["VHDL", "Assembly", "RISC-V", "Academic project"]
 
-  - name: "Auction Web Application"
-    role: "Project Manager & Developer"
+  - name: "Real-time Auction Web Application"
+    timeline: "2022 (3 months)"
+    role: "Product Owner & Developer"
     summary: "Design and development of a real-time auction web application using agile methods (team of 6)."
     tags: ["PHP", "JavaScript", "PostgreSQL", "WebSockets", "Academic project"]
     url: "/posts/projects/space_charity"
+
+  # - name: "NAME"
+  #   logo: "LOGO"
+  #   timeline: "TIMELINE"
+  #   role: "ROLE"
+  #   summary: "SUMMARY"
+  #   tags: ["TAG"]
+  #   repo: "REPÖ"
+  #   url: "URL"
