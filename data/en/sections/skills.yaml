@@ -20,7 +20,7 @@ skills:
 
   - name: DevOps & Cloud Native
     # logo: /images/sections/skills/kubernetes.png
-    summary: "[]()Capable of deploying and managing applications using:\n- Docker\n- Kubernetes\n- Rancher\n- AWX\n\nCI/CD automation with:\n- GitLab CI\n- GitHub Actions"
+    summary: "[]()Capable of deploying and managing applications using:\n- Docker\n- Kubernetes\n- Harvester\n- Qemu/KVM\n- AWX\n- Morpheus\n\nCI/CD automation with:\n- GitLab CI\n- GitHub Actions"
 
 
   - name: Low-level & System Programming
