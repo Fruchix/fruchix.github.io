@@ -14,7 +14,7 @@ menu:
 
 Web-based real-time multiplayer game, where players navigate through Wikipedia pages by clicking on internal links in order to reach one or more target pages.
 
-WikiGraph is currently hosted at <a href="https://wikigraph.fr" target="_blank">wikigraph.fr</a>
+WikiGraph was hosted at <a href="https://wikigraph.fr" target="_blank">wikigraph.fr</a>, but is no longer available since October 7th 2026. It will be brought up again in the future.
 
 ## Image gallery
 
